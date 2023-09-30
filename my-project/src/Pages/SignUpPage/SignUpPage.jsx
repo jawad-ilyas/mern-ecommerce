@@ -1,6 +1,5 @@
 import React from 'react'
-import SignUp from '../../Components/SignUp'
-
+import SignUp from '../../feature/Auth/Componet/SignUp'
 const SignUpPage = () => {
   return (
     <div>

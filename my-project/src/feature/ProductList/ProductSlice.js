@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllProducts, fetchProductById, fetchAllCatageroy, fetchAllBrands } from './ProductApi';
+import { fetchAllProducts, fetchProductByFilter, fetchAllCatageroy, fetchAllBrands  , fetchProductById } from './ProductApi';
 const initialState = {
   value: 0,
   totalItems: 0,
   products: [],
   brands: [],
   catageroy: [],
+  productId : null,
   status: 'idle',
 };
 
@@ -18,10 +19,10 @@ export const fetchAllProductsAsync = createAsyncThunk(
   }
 );
 export const fetchProductByFilterAsync = createAsyncThunk(
-  'product/fetchProductById',
+  'product/fetchProductByFilter',
   async ({ filter, sort, paginationValue }) => {
     // console.log(paginationValue)
-    const response = await fetchProductById(filter, sort, paginationValue);
+    const response = await fetchProductByFilter(filter, sort, paginationValue);
     const totalItems = response.totalItems; // Assuming your API response has a 'totalItems' property
     const products = response.data;
     // console.log(products, totalItems)
@@ -43,6 +44,15 @@ export const fetchAllCatageroyAsync = createAsyncThunk(
     const response = await fetchAllCatageroy();
     // console.log("catageroy " + response.catageroy)
     return response.catageroy
+  }
+);
+export const fetchProductByIdAsync = createAsyncThunk(
+  'product/fetchProductById',
+  async (id) => {
+    const response = await fetchProductById(id);
+    console.log("response : " + response.productId)
+
+    return response.productId
   }
 );
 
@@ -82,6 +92,14 @@ export const productSlice = createSlice({
         state.brands = action.payload;
 
       })
+      .addCase(fetchProductByIdAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProductByIdAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.productId = action.payload;
+
+      })
       .addCase(fetchAllCatageroyAsync.pending, (state) => {
         state.status = 'loading';
       })
@@ -100,5 +118,6 @@ export const allProducts = (state) => state.product.products;
 export const totalItems = (state) => state.product.totalItems;
 export const allBrands = (state) => state.product.brands;
 export const selectCatageroy = (state) => state.product.catageroy;
+export const selectProduct = (state) => state.product.productId;
 
 export default productSlice.reducer;

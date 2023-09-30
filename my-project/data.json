@@ -1841,7 +1841,7 @@
     }
   ],
   "brands": [
-    [
+    
       {
         "value": "Apple",
         "label": "Apple",
@@ -2232,10 +2232,10 @@
         "label": "YIOSI",
         "checked": false
       }
-    ]
+    
   ],
   "catageroy": [
-    [
+    
       {
         "value": "smartphones",
         "label": "smartphones",
@@ -2336,6 +2336,6 @@
         "label": "lighting",
         "checked": false
       }
-    ]
+    
   ]
 }

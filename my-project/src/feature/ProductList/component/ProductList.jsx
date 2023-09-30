@@ -33,7 +33,7 @@ export default function ProductList({ children }) {
   const totalProducts = useSelector(totalItems)
   const brands = useSelector(allBrands)
   const catageroy = useSelector(selectCatageroy)
-  console.log(brands)
+  // console.log(brands)
   // console.log(catageroy)
   const [filterValue, setFilterValue] = useState({})
   const [sortValue, setSortValue] = useState({})
@@ -169,10 +169,9 @@ export default function ProductList({ children }) {
                             </h3>
                             <Disclosure.Panel className="pt-6">
                               <div className="space-y-6">
-                                {/* {section.options} */}
-                                {section.options.map((option, optionIdx) => (
+
+                                {section?.options?.map((option, optionIdx) => (
                                   <div key={option.value} className="flex items-center">
-                                    {console.log(option)}
                                     <input
                                       id={`filter-mobile-${section.id}-${optionIdx}`}
                                       name={`${section.id}[]`}
@@ -302,9 +301,8 @@ export default function ProductList({ children }) {
                         </h3>
                         <Disclosure.Panel className="pt-6">
                           <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
+                            {section?.options?.map((option, optionIdx) => (
                               <div key={option.value} className="flex items-center">
-                                {console.log(option)}
 
                                 <input
                                   id={`filter-${section.id}-${optionIdx}`}
@@ -319,7 +317,7 @@ export default function ProductList({ children }) {
                                   htmlFor={`filter-${section.id}-${optionIdx}`}
                                   className="ml-3 text-sm text-gray-600"
                                 >
-                                  
+
                                   {option.label}
                                 </label>
                               </div>
@@ -340,7 +338,7 @@ export default function ProductList({ children }) {
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:gap-x-8">
                     {products.map((product) => (
                       <div key={product.id} className="group relative shadow-md p-2 rounded-md">
-                        <Link to="/product-detail">
+                        <Link to={`/product-detail/:${product.id}`}>
                           <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                             <img
                               src={product.thumbnail}

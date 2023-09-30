@@ -49,9 +49,26 @@ export function fetchAllCatageroy() {
       throw error; // Return a rejected Promise with the error
     });
 }
+export function fetchProductById(id) {
+  return fetch(`http://localhost:8080/products/${id}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then((productId) => {
+      console.log("productId : " + productId)
+      return { productId };
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      throw error; // Return a rejected Promise with the error
+    });
+}
 
 
-export const fetchProductById = async (filter, sort, paginationValue) => {
+export const fetchProductByFilter = async (filter, sort, paginationValue) => {
   // console.log(typeof paginationValue)
   // console.log(typeof sort)
   // console.log(typeof filter)
@@ -70,7 +87,7 @@ export const fetchProductById = async (filter, sort, paginationValue) => {
     queryString += `${key}=${paginationValue[key]}&`
   }
 
-  // console.log(queryString)
+  console.log(queryString)
   return await fetch('http://localhost:8080/products?' + queryString).then((response) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
