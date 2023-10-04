@@ -16,7 +16,7 @@ function App() {
     if (user) {
       dispatch(fetchItemByUserIdAsync(user?.id))
     }
-  }, [user])
+  }, [user, dispatch])
 
   return (
     <>

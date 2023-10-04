@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { selectItemsIntoAddToCart, updateCartAsync } from './CartSlice';
+import { selectItemsIntoAddToCart, updateCartAsync, deleteItemByUserIdAsync, fetchItemByUserIdAsync } from './CartSlice';
+import { selectLoggedInUser } from '../Auth/AuthSlice';
 export default function Cart() {
   const [quan, SetQuan] = useState(0);
 
   const dispatch = useDispatch()
-  const allItems = useSelector(selectItemsIntoAddToCart)
   const totalAmount = allItems.reduce((amount, item) => item.price * item.quantity + amount, 0)
   const totalItems = allItems.reduce((total, item) => item.quantity + total, 0)
   const handleQuantity = (event, item) => {
-    // console.log("select quantity" + event.target.value)
-    // SetQuan(event.target.value)
-    dispatch(updateCartAsync({ ...item, quantity: event.target.value }))
-    // console.log("select items " + item)
+    dispatch(updateCartAsync({ ...item, quantity: +event.target.value }))
   }
+  const handleRemoveItem = (item) => {
+    dispatch(deleteItemByUserIdAsync(item))
+  }
+  const user = useSelector(selectLoggedInUser)
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchItemByUserIdAsync(user?.id))
+    }
+  }, [user, dispatch])
   return (
 
     <div>

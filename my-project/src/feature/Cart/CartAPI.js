@@ -22,7 +22,7 @@ export async function updateCart(update) {
   console.log(typeof update.id)
   console.log(update)
   try {
-    const response = await fetch(`http://localhost:1122/cart?id=${update.id}`, {
+    const response = await fetch(`http://localhost:1122/cart/` + update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "content-type": 'application/json' }
@@ -34,6 +34,23 @@ export async function updateCart(update) {
 
     const data = await response.json();
     return { data };
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; // Return a rejected Promise with the error
+  }
+}
+export async function deleteItemByUserId(deleteId) {
+  try {
+    const response = await fetch(`http://localHost:1122/cart/${deleteId}` , {
+      method: "DELETE",
+      headers: { "content-type": 'application/json' }
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // const data = await response.json();
+    return { data: deleteId };
   } catch (error) {
     console.error('Error:', error);
     throw error; // Return a rejected Promise with the error
