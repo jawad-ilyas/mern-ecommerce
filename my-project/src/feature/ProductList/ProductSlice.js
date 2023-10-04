@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllProducts, fetchProductByFilter, fetchAllCatageroy, fetchAllBrands  , fetchProductById } from './ProductApi';
+import { fetchAllProducts, fetchProductByFilter, fetchAllCatageroy, fetchAllBrands, fetchProductById } from './ProductApi';
 const initialState = {
   value: 0,
   totalItems: 0,
   products: [],
   brands: [],
   catageroy: [],
-  productId : null,
+  productId: null,
   status: 'idle',
 };
 
@@ -49,8 +49,9 @@ export const fetchAllCatageroyAsync = createAsyncThunk(
 export const fetchProductByIdAsync = createAsyncThunk(
   'product/fetchProductById',
   async (id) => {
+    // console.log(id)
     const response = await fetchProductById(id);
-    console.log("response : " + response.productId)
+    // console.log("response : " + response.productId)
 
     return response.productId
   }

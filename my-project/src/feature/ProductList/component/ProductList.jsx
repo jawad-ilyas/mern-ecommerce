@@ -60,7 +60,6 @@ export default function ProductList({ children }) {
       newFilter[section].splice(index, 1);
     }
     setFilterValue(newFilter)
-
   }
   const filters = [
 
@@ -144,9 +143,9 @@ export default function ProductList({ children }) {
                     <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                       {subCategories.map((category) => (
                         <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
+                          <p to={category.href} className="block px-2 py-3">
                             {category.name}
-                          </a>
+                          </p>
                         </li>
                       ))}
                     </ul>
@@ -278,7 +277,7 @@ export default function ProductList({ children }) {
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
+                      <p to={category.href}>{category.name}</p>
                     </li>
                   ))}
                 </ul>
@@ -338,7 +337,8 @@ export default function ProductList({ children }) {
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:gap-x-8">
                     {products.map((product) => (
                       <div key={product.id} className="group relative shadow-md p-2 rounded-md">
-                        <Link to={`/product-detail/:${product.id}`}>
+
+                        <Link to={`/product-detail/${product.id}`}>
                           <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                             <img
                               src={product.thumbnail}
@@ -349,10 +349,10 @@ export default function ProductList({ children }) {
                           <div className="mt-4 flex justify-between">
                             <div>
                               <h3 className="text-sm text-gray-700">
-                                <a href={product.title}>
+                                <p to={product.title}>
                                   <span aria-hidden="true" className="absolute inset-0" />
                                   {product.title}
-                                </a>
+                                </p>
                               </h3>
                               <div className="mt-1 flex text-sm text-yellow-300">
                                 <span><StarIcon className='w-5'></StarIcon></span>

@@ -1,22 +1,30 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './AuthAPI';
+import { createUser, verifyUser } from './AuthAPI';
 
 const initialState = {
-  value: 0,
+  loggedInUser: null,
   status: 'idle',
+  errors: null,
 };
 
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
+export const createUserAsync = createAsyncThunk(
+  'auth/createUser',
+  async (userData) => {
+    const response = await createUser(userData);
     return response.data;
   }
 );
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const verifyUserAsync = createAsyncThunk(
+  'auth/verifyUser',
+  async (userData) => {
+    const response = await verifyUser(userData);
+    return response.data;
+  }
+);
+
+export const authSlice = createSlice({
+  name: 'auth',
   initialState,
   reducers: {
     increment: (state) => {
@@ -25,18 +33,29 @@ export const counterSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
+      .addCase(createUserAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
+      .addCase(createUserAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.value += action.payload;
-      });
+        state.loggedInUser = action.payload;
+      })
+      .addCase(verifyUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(verifyUserAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.loggedInUser = action.payload;
+      })
+      .addCase(verifyUserAsync.rejected, (state, action) => {
+        state.status = 'idle';
+        state.errors = action.error;
+      })
   },
 });
 
-export const { increment } = counterSlice.actions;
+export const { increment } = authSlice.actions;
+export const selectLoggedInUser = (state) => state.auth.loggedInUser
+export const selectError = (state) => state.auth.errors
 
-export const selectCount = (state) => state.counter.value;
-
-export default counterSlice.reducer;
+export default authSlice.reducer;

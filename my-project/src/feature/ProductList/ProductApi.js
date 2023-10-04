@@ -1,5 +1,5 @@
 export function fetchAllProducts() {
-  return fetch('http://localhost:8080/products')
+  return fetch('http://localhost:1122/products')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -15,7 +15,7 @@ export function fetchAllProducts() {
     });
 }
 export function fetchAllBrands() {
-  return fetch('http://localhost:8080/brands')
+  return fetch('http://localhost:1122/brands')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -33,7 +33,7 @@ export function fetchAllBrands() {
     });
 }
 export function fetchAllCatageroy() {
-  return fetch('http://localhost:8080/catageroy')
+  return fetch('http://localhost:1122/catageroy')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -50,7 +50,7 @@ export function fetchAllCatageroy() {
     });
 }
 export function fetchProductById(id) {
-  return fetch(`http://localhost:8080/products/${id}`)
+  return fetch(`http://localhost:1122/products/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -58,7 +58,7 @@ export function fetchProductById(id) {
       return response.json();
     })
     .then((productId) => {
-      console.log("productId : " + productId)
+      // console.log("productId : " + productId)
       return { productId };
     })
     .catch((error) => {
@@ -88,7 +88,7 @@ export const fetchProductByFilter = async (filter, sort, paginationValue) => {
   }
 
   console.log(queryString)
-  return await fetch('http://localhost:8080/products?' + queryString).then((response) => {
+  return await fetch('http://localhost:1122/products?' + queryString).then((response) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

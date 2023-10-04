@@ -6,6 +6,8 @@ import { useParams } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProduct } from '../ProductSlice'
 import { fetchProductByIdAsync } from '../ProductSlice'
+import { addToCartAsync } from '../../Cart/CartSlice'
+import { selectLoggedInUser } from '../../Auth/AuthSlice'
 // const product = {
 //   name: 'Basic Tee 6-Pack',
 //   price: '$192',
@@ -104,22 +106,28 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
+
 export default function ProductDetial() {
   // const [selectedColor, setSelectedColor] = useState(product.colors[0])
   // const [selectedSize, setSelectedSize] = useState(product.sizes[2])
   const dispatch = useDispatch();
   const product = useSelector(selectProduct)
-  console.log(product)
+  const user = useSelector(selectLoggedInUser)
+  console.log("selectLoggedInUser" + user?.id)
   let { id } = useParams();
-  id = id.slice(1)
-  console.log(id.length)
+  const handleAddToCart = (event) => {
+    event.preventDefault();
+    // Dispatch addToCartItemAsync with selectedColor and selectedSize
+    dispatch(addToCartAsync({ ...product, userId: user?.id, quantity: 1 }));
+  };
 
   useEffect(() => {
     dispatch(fetchProductByIdAsync(id))
 
   }, [dispatch, id])
   return (
-     product &&
+    product &&
     (<div className="bg-white">
       <div className="pt-6">
         <nav aria-label="Breadcrumb">
@@ -219,13 +227,18 @@ export default function ProductDetial() {
               </div>
             </div>
 
-            <form className="mt-10">
+            <form className="mt-10" onClick={
+
+              (event) => handleAddToCart(event)
+
+            }
+            >
               {/* Colors */}
               <div>
                 <h3 className="text-sm font-medium text-gray-900">Color</h3>
 
                 {/* <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4"> */}
-                <RadioGroup  className="mt-4">
+                <RadioGroup className="mt-4">
                   <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
                   <div className="flex items-center space-x-3">
                     {colors.map((color) => (
@@ -267,7 +280,7 @@ export default function ProductDetial() {
                 </div>
 
                 {/* <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4"> */}
-                <RadioGroup  className="mt-4">
+                <RadioGroup className="mt-4">
                   <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>
                   <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
                     {sizes.map((size) => (

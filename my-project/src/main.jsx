@@ -18,6 +18,7 @@ import { Provider } from 'react-redux';
 import CartPage from './Pages/CartPage/CartPage.jsx';
 import CheckoutPage from './Pages/CheckoutPage/CheckoutPage.jsx';
 import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx';
+import Protected from './feature/Auth/Componet/protected.js';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,17 +44,17 @@ const router = createBrowserRouter([
       ,
       {
         path: "/cart",
-        element: <CartPage />
+        element: <Protected ><CartPage /></Protected>
       }
       ,
       {
         path: "/checkout",
-        element: <CheckoutPage />
+        element: <Protected ><CheckoutPage /></Protected>
       }
       ,
       {
         path: "/product-detail/:id",
-        element: <ProductDetailPage />
+        element: <Protected ><ProductDetailPage /></Protected>
       }
     ]
   }

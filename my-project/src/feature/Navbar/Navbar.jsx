@@ -2,6 +2,8 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, ShoppingCartIcon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectItemsIntoAddToCart } from '../Cart/CartSlice'
 const navigation = [
     { name: 'Home', href: '/', current: true },
     { name: 'Checkout', href: '/checkout', current: false },
@@ -14,6 +16,8 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
+    const items = useSelector(selectItemsIntoAddToCart)
+
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -42,7 +46,7 @@ const Navbar = () => {
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">
-                                      
+
                                         {navigation.map((item) => (
                                             <NavLink
                                                 key={item.name}
@@ -66,7 +70,8 @@ const Navbar = () => {
                                         <span className="sr-only">View notifications</span>
                                         <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
                                     </Link>
-                                    <span className="inline-flex absolute -top-3 items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">2</span>
+                                    <span className="inline-flex absolute -top-3 items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{items.length}</span>
+                                    {/* <span className="inline-flex absolute -top-3 items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">0</span> */}
                                 </button>
 
 
@@ -119,7 +124,7 @@ const Navbar = () => {
                                                         to="/login"
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                     >
-                                                        Sign out
+                                                        log out
                                                     </Link>
                                                 )}
                                             </Menu.Item>
