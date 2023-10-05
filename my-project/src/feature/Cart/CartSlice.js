@@ -34,7 +34,9 @@ export const deleteItemByUserIdAsync = createAsyncThunk(
   'cart/deleteItemByUserId',
   async (userId) => {
     const response = await deleteItemByUserId(userId)
-    return response.data
+    console.log( response)
+    console.log(response.id)
+    return response
 
   }
 )
@@ -78,7 +80,10 @@ export const cartSlice = createSlice({
       })
       .addCase(deleteItemByUserIdAsync.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        const index = state.items.findIndex(item => item.id === action.payload.id); // Check if 'id' is the correct property for identification
+        const idToFind = action.payload.id;
+        console.log("Action Payload ID:", idToFind);
+        const index = state.items.findIndex(item => item.id == action.payload.id); // Check if 'id' is the correct property for identification
+        console.log(index)
         if (index !== -1) {
           state.items.splice(index, 1)
         }

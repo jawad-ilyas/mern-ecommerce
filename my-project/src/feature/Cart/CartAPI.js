@@ -50,7 +50,7 @@ export async function deleteItemByUserId(deleteId) {
     }
 
     // const data = await response.json();
-    return { data: deleteId };
+    return { id:deleteId };
   } catch (error) {
     console.error('Error:', error);
     throw error; // Return a rejected Promise with the error

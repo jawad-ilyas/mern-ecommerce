@@ -3,34 +3,40 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+import { selectItemsIntoAddToCart, deleteItemByUserIdAsync } from '../Cart/CartSlice'
 export default function Checkout() {
   const [open, setOpen] = useState(true)
-  const products = [
-    {
-      id: 1,
-      name: 'Throwback Hip Bag',
-      href: '#',
-      color: 'Salmon',
-      price: '$90.00',
-      quantity: 1,
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-      imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-    },
-    {
-      id: 2,
-      name: 'Medium Stuff Satchel',
-      href: '#',
-      color: 'Blue',
-      price: '$32.00',
-      quantity: 1,
-      imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-      imageAlt:
-        'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-    },
-    // More products...
-  ]
+  // const products = [
+  //   {
+  //     id: 1,
+  //     name: 'Throwback Hip Bag',
+  //     href: '#',
+  //     color: 'Salmon',
+  //     price: '$90.00',
+  //     quantity: 1,
+  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
+  //     imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'Medium Stuff Satchel',
+  //     href: '#',
+  //     color: 'Blue',
+  //     price: '$32.00',
+  //     quantity: 1,
+  //     imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
+  //     imageAlt:
+  //       'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+  //   },
+  //   // More products...
+  // ]
+  const dispatch = useDispatch();
+  const products = useSelector(selectItemsIntoAddToCart)
+  const totalPrice = products.reduce((acc, currentValue) => currentValue.price * currentValue.quantity + acc, 0)
+  console.log(totalPrice)
   return (
-    <div className='flex flex-col md:flex-row container mx-auto'>
+    <div className='flex flex-col md:flex-row  mx-auto'>
 
 
       <div className=" shadow-lg rounded-lg p-4 my-6">
@@ -363,11 +369,6 @@ export default function Checkout() {
           </div>
         </form>
       </div>
-
-
-
-
-      {/* right side  */}
       <div className='mx-3 shadow-lg rounded-lg p-4 my-6'>
         <div>
           <div className="mt-8">
@@ -377,8 +378,8 @@ export default function Checkout() {
                   <li key={product.id} className="flex py-6">
                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                       <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
+                        src={product.thumbnail}
+                        alt={product.title}
                         className="h-full w-full object-cover object-center"
                       />
                     </div>
@@ -387,7 +388,7 @@ export default function Checkout() {
                       <div>
                         <div className="flex justify-between text-base font-medium text-gray-900">
                           <h3>
-                            <a href={product.href}>{product.name}</a>
+                            <a href={product.title}>{product.title}</a>
                           </h3>
                           <p className="ml-4">{product.price}</p>
                         </div>
@@ -398,6 +399,7 @@ export default function Checkout() {
 
                         <div className="flex">
                           <button
+                            onClick={()=>dispatch(deleteItemByUserIdAsync(product.id))}
                             type="button"
                             className="font-medium text-indigo-600 hover:text-indigo-500"
                           >
@@ -416,7 +418,7 @@ export default function Checkout() {
         <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Subtotal</p>
-            <p>$262.00</p>
+            <p>${totalPrice}</p>
           </div>
           <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
 

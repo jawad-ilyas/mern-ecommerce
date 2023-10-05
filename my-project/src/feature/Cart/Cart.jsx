@@ -7,6 +7,7 @@ export default function Cart() {
   const [quan, SetQuan] = useState(0);
 
   const dispatch = useDispatch()
+  const allItems = useSelector(selectItemsIntoAddToCart)
   const totalAmount = allItems.reduce((amount, item) => item.price * item.quantity + amount, 0)
   const totalItems = allItems.reduce((total, item) => item.quantity + total, 0)
   const handleQuantity = (event, item) => {
@@ -20,7 +21,12 @@ export default function Cart() {
     if (user) {
       dispatch(fetchItemByUserIdAsync(user?.id))
     }
-  }, [user, dispatch])
+  }, [user, dispatch, allItems.length])
+  useEffect(() => {
+    // This useEffect listens to changes in `allItems` from Redux
+    // It will re-run whenever `allItems` in Redux changes
+    console.log("allItems updated:", allItems);
+  }, [allItems]);
   return (
 
     <div>
