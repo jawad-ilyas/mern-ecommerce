@@ -15,7 +15,7 @@ export default function Login() {
   const navigate = useNavigate()
   // { user?.redirect && naviage('/') }
   useEffect(() => {
-    if (user?.redirect) {
+    if (user?.id) {
       navigate("/");
     }
   }, [user, navigate]);

@@ -118,8 +118,11 @@ export default function ProductDetial() {
   let { id } = useParams();
   const handleAddToCart = (event) => {
     event.preventDefault();
-    // Dispatch addToCartItemAsync with selectedColor and selectedSize
-    dispatch(addToCartAsync({ ...product, userId: user?.id, quantity: 1 }));
+    console.log(event )
+    const newItem = { ...product, userId: user?.id, quantity: 1 }
+    delete newItem['id']
+
+    dispatch(addToCartAsync(newItem));
   };
 
   useEffect(() => {

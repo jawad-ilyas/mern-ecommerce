@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { createUserAsync, selectLoggedInUser } from "../AuthSlice"
 export default function SignUp() {
-  const { register, handleSubmit, watch, formState: { errors }, } = useForm()
+  const { register, handleSubmit, reset, watch, formState: { errors }, } = useForm()
   console.log(errors)
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser)
@@ -27,8 +27,9 @@ export default function SignUp() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form noValidate className="space-y-6"
             onSubmit={handleSubmit((data) => {
-              dispatch(createUserAsync({ email: data.email, password: data.password }))
-              console.log(data)
+              dispatch(createUserAsync({ email: data.email, password: data.password, addresses: [] }))
+              reset();
+              // console.log(data)
             })}>            <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address <span className="text-red-300"> * </span>

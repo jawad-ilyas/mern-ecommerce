@@ -1,42 +1,47 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchCount } from './counterAPI';
+import { createOrder } from './CheckoutApi';
 
 const initialState = {
-  value: 0,
+  orderItems: [],
   status: 'idle',
+  orderDetail: null,
+
 };
 
-export const incrementAsync = createAsyncThunk(
-  'counter/fetchCount',
-  async (amount) => {
-    const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
+export const createOrderAsync = createAsyncThunk(
+  'checkOut/createOrder',
+  async (orderItems) => {
+    const response = await createOrder(orderItems);
+    console.log(response)
     return response.data;
   }
 );
 
-export const counterSlice = createSlice({
-  name: 'counter',
+export const checkOutSlice = createSlice({
+  name: 'checkOut',
   initialState,
   reducers: {
     increment: (state) => {
       state.value += 1;
     },
+    resetCheckout: (state) => {
+      state.orderDetail = null;
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(incrementAsync.pending, (state) => {
+      .addCase(createOrderAsync.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(incrementAsync.fulfilled, (state, action) => {
+      .addCase(createOrderAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.value += action.payload;
+        state.orderItems.push(action.payload);
+        state.orderDetail = action.payload;
       });
   },
 });
 
-export const { increment } = counterSlice.actions;
+export const { increment  ,resetCheckout} = checkOutSlice.actions;
 
-export const selectCount = (state) => state.counter.value;
-
-export default counterSlice.reducer;
+export const selectOrderDetail = (state) => state.checkOut.orderDetail
+export default checkOutSlice.reducer;

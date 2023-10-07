@@ -41,7 +41,7 @@ export async function updateCart(update) {
 }
 export async function deleteItemByUserId(deleteId) {
   try {
-    const response = await fetch(`http://localHost:1122/cart/${deleteId}` , {
+    const response = await fetch(`http://localHost:1122/cart/${deleteId}`, {
       method: "DELETE",
       headers: { "content-type": 'application/json' }
     });
@@ -50,7 +50,7 @@ export async function deleteItemByUserId(deleteId) {
     }
 
     // const data = await response.json();
-    return { id:deleteId };
+    return { id: deleteId };
   } catch (error) {
     console.error('Error:', error);
     throw error; // Return a rejected Promise with the error
@@ -69,4 +69,23 @@ export async function fetchItemByUserId(userId) {
     console.error('Error:', error);
     throw error; // Return a rejected Promise with the error
   }
+}
+
+
+
+export async function resetCart(userId) {
+  // console.log(userId)
+  const response = await fetchItemByUserId(userId);
+  console.log(response.data)
+  const items = await response.data;
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    try {
+      await deleteItemByUserId(item.id);
+      console.log(`Item with id ${item.id} deleted successfully.`);
+    } catch (error) {
+      console.error(`Error deleting item with id ${item.id}: ${error.message}`);
+    }
+  }
+
 }

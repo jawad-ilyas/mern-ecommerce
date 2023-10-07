@@ -3,6 +3,7 @@ import counterSlice from '../feature/Counter/counterSlice';
 import AuthSlice from '../feature/Auth/AuthSlice';
 import ProductSlice from '../feature/ProductList/ProductSlice';
 import CartSlice from '../feature/Cart/CartSlice';
+import  OrderSlice  from '../feature/Checkout/CheckoutSlice';
 
 
 export const Store = configureStore({
@@ -10,5 +11,6 @@ export const Store = configureStore({
         auth: AuthSlice,
         product: ProductSlice,
         cart: CartSlice,
+        checkOut:OrderSlice
     }
 }) 

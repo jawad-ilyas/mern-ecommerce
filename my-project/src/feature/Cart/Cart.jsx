@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectItemsIntoAddToCart, updateCartAsync, deleteItemByUserIdAsync, fetchItemByUserIdAsync } from './CartSlice';
 import { selectLoggedInUser } from '../Auth/AuthSlice';
+import { useNavigate } from 'react-router-dom';
 export default function Cart() {
   const [quan, SetQuan] = useState(0);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch()
   const allItems = useSelector(selectItemsIntoAddToCart)
   const totalAmount = allItems.reduce((amount, item) => item.price * item.quantity + amount, 0)
@@ -25,7 +26,7 @@ export default function Cart() {
   useEffect(() => {
     // This useEffect listens to changes in `allItems` from Redux
     // It will re-run whenever `allItems` in Redux changes
-    console.log("allItems updated:", allItems);
+    { !allItems.length && navigate('/') }
   }, [allItems]);
   return (
 

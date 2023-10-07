@@ -19,6 +19,8 @@ import CartPage from './Pages/CartPage/CartPage.jsx';
 import CheckoutPage from './Pages/CheckoutPage/CheckoutPage.jsx';
 import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx';
 import Protected from './feature/Auth/Componet/protected.js';
+import PageNotFound from './Pages/PageNotFound.jsx';
+import Success from './Pages/success.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +57,16 @@ const router = createBrowserRouter([
       {
         path: "/product-detail/:id",
         element: <Protected ><ProductDetailPage /></Protected>
+      }
+      ,
+      {
+        path: "/success/:id",
+        element: < ><Success /></>
+      }
+      ,
+      {
+        path: "*",
+        element: <PageNotFound />
       }
     ]
   }
