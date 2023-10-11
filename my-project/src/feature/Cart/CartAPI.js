@@ -78,14 +78,17 @@ export async function resetCart(userId) {
   const response = await fetchItemByUserId(userId);
   console.log(response.data)
   const items = await response.data;
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    try {
-      await deleteItemByUserId(item.id);
-      console.log(`Item with id ${item.id} deleted successfully.`);
-    } catch (error) {
-      console.error(`Error deleting item with id ${item.id}: ${error.message}`);
-    }
+  // for (let i = 0; i < items.length; i++) {
+  //   const item = items[i];
+  //   try {
+  //     await deleteItemByUserId(item.id);
+  //     console.log(`Item with id ${item.id} deleted successfully.`);
+  //   } catch (error) {
+  //     console.error(`Error deleting item with id ${item.id}: ${error.message}`);
+  //   }
+  // }
+  for (let item of items) {
+    await deleteItemByUserId(item.id)
+    console.log(`Item with id ${item.id} deleted successfully.`);
   }
-
 }

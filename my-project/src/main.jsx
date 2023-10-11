@@ -62,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/success/:id",
         element: < ><Success /></>
+      },
+      {
+        path: "/myOrders",
+        element: <Success />
       }
       ,
       {
