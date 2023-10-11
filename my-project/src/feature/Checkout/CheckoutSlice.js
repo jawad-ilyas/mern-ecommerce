@@ -35,13 +35,14 @@ export const checkOutSlice = createSlice({
       })
       .addCase(createOrderAsync.fulfilled, (state, action) => {
         state.status = 'idle';
-        state.orderItems.push(action.payload);
         state.orderDetail = action.payload;
+        state.orderItems.push(action.payload);
+        const item = action.payload
+        console.log(item)
       });
   },
 });
 
 export const { increment  ,resetCheckout} = checkOutSlice.actions;
-
 export const selectOrderDetail = (state) => state.checkOut.orderDetail
 export default checkOutSlice.reducer;
