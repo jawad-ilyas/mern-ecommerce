@@ -1,9 +1,10 @@
 import React from 'react'
+import UserOrder from '../../feature/User/Component/UserOrder'
 
 const OrdersInfoPage = () => {
-  return (
-    <div>OrdersInfoPage</div>
-  )
+    return (
+        <UserOrder />
+    )
 }
 
 export default OrdersInfoPage

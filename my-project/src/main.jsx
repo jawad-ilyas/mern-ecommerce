@@ -21,6 +21,7 @@ import ProductDetailPage from './Pages/ProductDetailPage/ProductDetailPage.jsx';
 import Protected from './feature/Auth/Componet/protected.js';
 import PageNotFound from './Pages/PageNotFound.jsx';
 import Success from './Pages/success.jsx';
+import OrdersInfoPage from './Pages/OrdersInfoPage/OrdersInfoPage.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/myOrders",
-        element: <Success />
+        element: <OrdersInfoPage />
       }
       ,
       {
