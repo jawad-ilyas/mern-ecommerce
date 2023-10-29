@@ -7,6 +7,7 @@ import { Outlet } from 'react-router-dom'
 import { fetchItemByUserIdAsync } from './feature/Cart/CartSlice'
 import { selectLoggedInUser } from './feature/Auth/AuthSlice'
 import { useEffect } from 'react'
+import { fetchAllDataForProfileAsync } from './feature/User/UserSlice'
 
 function App() {
   const user = useSelector(selectLoggedInUser)
@@ -15,6 +16,7 @@ function App() {
   useEffect(() => {
     if (user) {
       dispatch(fetchItemByUserIdAsync(user?.id))
+      dispatch(fetchAllDataForProfileAsync(user?.id))
     }
   }, [user, dispatch])
 

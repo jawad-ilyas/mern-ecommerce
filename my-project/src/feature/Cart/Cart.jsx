@@ -12,7 +12,7 @@ export default function Cart() {
   const totalAmount = allItems.reduce((amount, item) => item.price * item.quantity + amount, 0)
   const totalItems = allItems.reduce((total, item) => item.quantity + total, 0)
   const handleQuantity = (event, item) => {
-    dispatch(updateCartAsync({ ...item, quantity: +event.target.value }))
+    dispatch(updateCartAsync({ ...item, quantity: +event.target.value , status : "pending" }))
   }
   const handleRemoveItem = (item) => {
     dispatch(deleteItemByUserIdAsync(item))
@@ -24,8 +24,6 @@ export default function Cart() {
     }
   }, [user, dispatch, allItems.length])
   useEffect(() => {
-    // This useEffect listens to changes in `allItems` from Redux
-    // It will re-run whenever `allItems` in Redux changes
     { !allItems.length && navigate('/') }
   }, [allItems]);
   return (

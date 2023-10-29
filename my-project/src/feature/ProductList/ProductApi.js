@@ -105,3 +105,80 @@ export const fetchProductByFilter = async (filter, sort, paginationValue) => {
 
 }
 
+
+
+
+//  this function is used to add product 
+
+
+export async function updateProduct(update) {
+
+
+  console.log(" i am into the product edit function ")
+
+  console.log(typeof update.id)
+  console.log(update)
+  try {
+    const response = await fetch(`http://localhost:1122/products/` + update.id, {
+      method: "PATCH",
+      body: JSON.stringify(update),
+      headers: { "content-type": 'application/json' }
+    });
+    console.log(response)
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return { data };
+  } catch (error) {
+    console.error('Error:', error);
+    throw error; // Return a rejected Promise with the error
+  }
+}
+
+
+
+
+
+
+export async function deleteProduct(deleteId) {
+
+
+
+  console.log(deleteId);
+  const response = await fetch(`http://localhost:1122/products/${deleteId}`, {
+    method: "DELETE",
+    headers: { "content-type": 'application/json' }
+  });
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  // const data = await response.json();
+  return { id: deleteId };
+}
+
+
+
+
+
+
+export async function addProduct(data) {
+
+  try {
+    const response = await fetch('http://localhost:1122/products', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "content-type": "application/json" }
+    })
+    console.log(response)
+
+
+    return response.json();
+  } catch (error) {
+
+  }
+
+
+} 

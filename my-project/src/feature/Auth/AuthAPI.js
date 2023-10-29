@@ -19,6 +19,13 @@ export async function createUser(userData) {
   }
 }
 
+
+export async function logOut(){
+
+
+    return {data:'success'}
+  
+}
 export async function verifyUser(userData) {
   const { email } = userData;
   const { password } = userData;

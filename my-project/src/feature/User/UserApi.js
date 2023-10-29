@@ -1,7 +1,7 @@
 export async function fetchOrderByUserId(id) {
   console.log(id)
   try {
-    
+
     const response = await fetch("http://localhost:1122/orders/?products.userId=" + id)
     const data = await response.json();
     console.log(data)
@@ -14,7 +14,7 @@ export async function fetchOrderByUserId(id) {
 export async function updateUser(userData) {
   console.log(userData)
   try {
-    const response = await fetch('http://localhost:1122/users/'+userData.id, {
+    const response = await fetch('http://localhost:1122/users/' + userData.id, {
       method: "PATCH",
       body: JSON.stringify(userData),
       headers: { "content-type": 'application/json' }
@@ -29,5 +29,16 @@ export async function updateUser(userData) {
   } catch (error) {
     console.error('Error:', error);
     throw error; // Return a rejected Promise with the error
+  }
+}
+
+export async function fetchAllDataForProfile(id) {
+  console.log("this is the id for fetch the data for the profile : " + id)
+  try {
+    const response = await fetch('http://localhost:1122/users?id=' + id)
+    const data = await response.json();
+    return { data }
+  } catch (error) {
+    console.log(error)
   }
 }

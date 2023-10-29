@@ -29,24 +29,29 @@ export default function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const products = useSelector(selectItemsIntoAddToCart)
-  const orderDetail = useSelector(selectOrderDetail)
   const totalPrice = products.reduce((acc, currentValue) => currentValue.price * currentValue.quantity + acc, 0)
   const totalItems = products.reduce((total, item) => item.quantity + total, 0)
 
+  const orderDetail = useSelector(selectOrderDetail)
   const handleOrder = async () => {
-    const order = { totalPrice, products, user: user.id, address: selectAddress, paymentMehtod: selectPayment };
+    const order = { totalPrice, products, user: user.id, address: selectAddress, paymentMehtod: selectPayment, status: "pending" };
 
     // Dispatch the createOrderAsync action
-    await dispatch(createOrderAsync(order));
+    dispatch(createOrderAsync(order));
+  
+  }
 
-    // Now you can access the updated orderDetail value
-    console.log(orderDetail);
 
-    // Navigate to the success page if needed
+
+  useEffect(() => {
+    // Check if orderDetail has been updated
     if (orderDetail) {
       navigate(`/success/${orderDetail.id}`);
+      // Reset orderDetail to null to avoid navigating again on subsequent renders
+     
     }
-  }
+  }, [orderDetail, dispatch, navigate]);
+
 
   const handlePayment = (event) => {
     console.log(event.target.value)

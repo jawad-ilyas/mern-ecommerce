@@ -8,6 +8,8 @@ const navigation = [
     { name: 'Home', href: '/', current: true },
     { name: 'Checkout', href: '/checkout', current: false },
     { name: 'Cart', href: '/cart', current: false },
+    { name: 'admin', href: '/admin', current: false },
+    { name: 'adminOrder', href: '/adminOrder', current: false },
     // { name: 'Calendar', href: '#', current: false },
 ]
 
@@ -131,7 +133,7 @@ const Navbar = () => {
                                             <Menu.Item>
                                                 {({ active }) => (
                                                     <Link
-                                                        to="/login"
+                                                        to="/logout"
                                                         className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                     >
                                                         log out

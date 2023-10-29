@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchAllProducts, fetchProductByFilter, fetchAllCatageroy, fetchAllBrands, fetchProductById } from './ProductApi';
+import { fetchAllProducts, deleteProduct, fetchProductByFilter, updateProduct, fetchAllCatageroy, fetchAllBrands, fetchProductById  ,addProduct} from './ProductApi';
 const initialState = {
   value: 0,
   totalItems: 0,
@@ -38,6 +38,14 @@ export const fetchAllBrandsAsync = createAsyncThunk(
     return response.brands
   }
 );
+
+export const updateProductAsync = createAsyncThunk(
+  'product/updateProduct',
+  async (update) => {
+    const response = await updateProduct(update);
+    return response.data
+  }
+);
 export const fetchAllCatageroyAsync = createAsyncThunk(
   'product/fetchAllCatageroy',
   async () => {
@@ -54,6 +62,26 @@ export const fetchProductByIdAsync = createAsyncThunk(
     // console.log("response : " + response.productId)
 
     return response.productId
+  }
+);
+export const addProductAsync = createAsyncThunk(
+  'product/addProduct',
+  async (data) => {
+    // console.log(id)
+    const response = await addProduct(data);
+    // console.log("response : " + response.productId)
+
+    return response
+  }
+);
+export const deleteProductAsync = createAsyncThunk(
+  'product/deleteProduct',
+  async (data) => {
+    // console.log(id)
+    const response = await deleteProduct(data);
+    // console.log("response : " + response.productId)
+
+    return response
   }
 );
 
@@ -108,7 +136,39 @@ export const productSlice = createSlice({
         state.status = 'idle';
         state.catageroy = action.payload;
 
-      });
+      })
+      .addCase(addProductAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addProductAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.products.push(action.payload);
+
+      })
+      .addCase(updateProductAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateProductAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+
+        console.log("i am the action payload");
+
+        const index = state.products.findIndex(item => item.id === action.payload.id); // Check if 'id' is the correct property for identification
+        if (index !== -1) {
+          state.products[index] = action.payload;
+        }
+      })
+      .addCase(deleteProductAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteProductAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+
+        const index = state.products.findIndex(item => item.id === action.payload.id); // Check if 'id' is the correct property for identification
+        if (index !== -1) {
+          state.products.splice(index , 1)
+        }
+      })
 
   },
 });
