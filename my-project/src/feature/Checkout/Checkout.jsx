@@ -34,11 +34,11 @@ export default function Checkout() {
 
   const orderDetail = useSelector(selectOrderDetail)
   const handleOrder = async () => {
-    const order = { totalPrice, products, user: user.id, address: selectAddress, paymentMehtod: selectPayment, status: "pending" };
+    const order = { products: products, user: user.id, quantity: 1 };
 
     // Dispatch the createOrderAsync action
     dispatch(createOrderAsync(order));
-  
+
   }
 
 
@@ -48,7 +48,7 @@ export default function Checkout() {
     if (orderDetail) {
       navigate(`/success/${orderDetail.id}`);
       // Reset orderDetail to null to avoid navigating again on subsequent renders
-     
+
     }
   }, [orderDetail, dispatch, navigate]);
 

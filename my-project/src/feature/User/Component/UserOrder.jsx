@@ -5,11 +5,15 @@ import { selectLoggedInUser } from '../../Auth/AuthSlice';
 export default function UserOrder() {
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser)
+
+  console.log("we called this funciton into the user order ", user);
   // console.log(user)
   const orders = useSelector(selectOrdersInfo)
   console.log(orders)
   useEffect(() => {
-    dispatch(fetchOrderByUserIdAsync(user?.id))
+    if (user?.id != undefined) {
+      dispatch(fetchOrderByUserIdAsync(user?.id))
+    }
   }, [user])
 
   return (
@@ -24,7 +28,7 @@ export default function UserOrder() {
                 <li className="flex items-center gap-4 pb-3" key={index}>
                   {/* {SetQuan(item?.quantity)} */}
                   <img
-                    src={item.thumbnail}
+                    src={item.product.thumbnail}
                     alt=""
                     className="h-16 w-16 rounded object-cover"
                   />
@@ -35,12 +39,12 @@ export default function UserOrder() {
                     <dl className="mt-0.5 space-y-px text-[10px] text-gray-900">
                       <div>
                         <dt className="inline">brand : </dt>
-                        <dd className="inline">{item.brand}</dd>
+                        <dd className="inline">{item.product.brand}</dd>
                       </div>
 
                       <div>
                         <dt className="inline">category : </dt>
-                        <dd className="inline">{item.category}</dd>
+                        <dd className="inline">{item.product.category}</dd>
                       </div>
                     </dl>
                   </div>

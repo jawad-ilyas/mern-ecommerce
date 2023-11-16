@@ -1,8 +1,14 @@
 export async function fetchOrderByUserId(id) {
   console.log(id)
+
+
   try {
 
-    const response = await fetch("http://localhost:1122/orders/?products.userId=" + id)
+
+    console.log("\n now we fetch the all order of the user into user api \n");
+
+
+    const response = await fetch(`http://localhost:8080/orders/${id}`)
     const data = await response.json();
     console.log(data)
     return { data };
@@ -14,7 +20,7 @@ export async function fetchOrderByUserId(id) {
 export async function updateUser(userData) {
   console.log(userData)
   try {
-    const response = await fetch('http://localhost:1122/users/' + userData.id, {
+    const response = await fetch('http://localhost:8080/users/' + userData.id, {
       method: "PATCH",
       body: JSON.stringify(userData),
       headers: { "content-type": 'application/json' }
@@ -35,7 +41,7 @@ export async function updateUser(userData) {
 export async function fetchAllDataForProfile(id) {
   console.log("this is the id for fetch the data for the profile : " + id)
   try {
-    const response = await fetch('http://localhost:1122/users?id=' + id)
+    const response = await fetch(`http://localhost:8080/users/${id}`)
     const data = await response.json();
     return { data }
   } catch (error) {

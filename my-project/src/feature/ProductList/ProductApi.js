@@ -1,5 +1,5 @@
 export function fetchAllProducts() {
-  return fetch('http://localhost:1122/products')
+  return fetch('http://localhost:8080/products')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -15,7 +15,7 @@ export function fetchAllProducts() {
     });
 }
 export function fetchAllBrands() {
-  return fetch('http://localhost:1122/brands')
+  return fetch('http://localhost:8080/brands')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -33,7 +33,7 @@ export function fetchAllBrands() {
     });
 }
 export function fetchAllCatageroy() {
-  return fetch('http://localhost:1122/catageroy')
+  return fetch('http://localhost:8080/categories')
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -50,7 +50,7 @@ export function fetchAllCatageroy() {
     });
 }
 export function fetchProductById(id) {
-  return fetch(`http://localhost:1122/products/${id}`)
+  return fetch(`http://localhost:8080/products/${id}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -88,7 +88,7 @@ export const fetchProductByFilter = async (filter, sort, paginationValue) => {
   }
 
   console.log(queryString)
-  return await fetch('http://localhost:1122/products?' + queryString).then((response) => {
+  return await fetch('http://localhost:8080/products?' + queryString).then((response) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -119,7 +119,7 @@ export async function updateProduct(update) {
   console.log(typeof update.id)
   console.log(update)
   try {
-    const response = await fetch(`http://localhost:1122/products/` + update.id, {
+    const response = await fetch(`http://localhost:8080/products/` + update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "content-type": 'application/json' }
@@ -147,7 +147,7 @@ export async function deleteProduct(deleteId) {
 
 
   console.log(deleteId);
-  const response = await fetch(`http://localhost:1122/products/${deleteId}`, {
+  const response = await fetch(`http://localhost:8080/products/${deleteId}`, {
     method: "DELETE",
     headers: { "content-type": 'application/json' }
   });
@@ -167,7 +167,7 @@ export async function deleteProduct(deleteId) {
 export async function addProduct(data) {
 
   try {
-    const response = await fetch('http://localhost:1122/products', {
+    const response = await fetch('http://localhost:8080/products', {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "content-type": "application/json" }

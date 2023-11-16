@@ -3,7 +3,7 @@ export async function createOrder(orderItems) {
   try {
 
 
-    const response = await fetch("http://localhost:1122/orders", {
+    const response = await fetch("http://localhost:8080/orders", {
       method: "POST",
       body: JSON.stringify(orderItems),
       headers: { "content-type": 'application/json' }

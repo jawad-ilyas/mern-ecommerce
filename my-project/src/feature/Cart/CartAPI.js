@@ -1,7 +1,7 @@
 export async function addToCart(item) {
   console.log(item)
   try {
-    const response = await fetch('http://localhost:1122/cart', {
+    const response = await fetch('http://localhost:8080/cart', {
       method: "POST",
       body: JSON.stringify(item),
       headers: { "content-type": 'application/json' }
@@ -22,7 +22,7 @@ export async function updateCart(update) {
   console.log(typeof update.id)
   console.log(update)
   try {
-    const response = await fetch(`http://localhost:1122/cart/` + update.id, {
+    const response = await fetch(`http://localhost:8080/cart/` + update.id, {
       method: "PATCH",
       body: JSON.stringify(update),
       headers: { "content-type": 'application/json' }
@@ -41,7 +41,7 @@ export async function updateCart(update) {
 }
 export async function deleteItemByUserId(deleteId) {
   try {
-    const response = await fetch(`http://localHost:1122/cart/${deleteId}`, {
+    const response = await fetch(`http://localHost:8080/cart/${deleteId}`, {
       method: "DELETE",
       headers: { "content-type": 'application/json' }
     });
@@ -58,7 +58,7 @@ export async function deleteItemByUserId(deleteId) {
 }
 export async function fetchItemByUserId(userId) {
   try {
-    const response = await fetch('http://localhost:1122/cart?userId=' + userId);
+    const response = await fetch(`http://localhost:8080/cart/cartInfo/${userId}`);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

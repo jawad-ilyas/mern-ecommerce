@@ -3,15 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { createUserAsync, selectLoggedInUser } from "../AuthSlice"
+import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 export default function SignUp() {
   const { register, handleSubmit, reset, watch, formState: { errors }, } = useForm()
   console.log(errors)
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const user = useSelector(selectLoggedInUser)
   console.log(user)
   return (
     <>
-      {user?.email}
+      {/* {user?.email} */}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -28,6 +34,7 @@ export default function SignUp() {
           <form noValidate className="space-y-6"
             onSubmit={handleSubmit((data) => {
               dispatch(createUserAsync({ email: data.email, password: data.password, addresses: [], role: "user" }))
+              navigate("/")
               reset();
               // console.log(data)
             })}>            <div>

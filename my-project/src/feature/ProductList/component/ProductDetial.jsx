@@ -118,9 +118,10 @@ export default function ProductDetial() {
   let { id } = useParams();
   const handleAddToCart = (event) => {
     event.preventDefault();
-    console.log(event )
-    const newItem = { ...product, userId: user?.id, quantity: 1 }
-    delete newItem['id']
+    console.log(event)
+    const newItem = { quantity: 1, product: product.id, user: user?.id }
+    // console.log("handleAddToCart into product detail page ", newItem)
+    // delete newItem['id']
 
     dispatch(addToCartAsync(newItem));
   };

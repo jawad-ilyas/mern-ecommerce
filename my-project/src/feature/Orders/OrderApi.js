@@ -2,7 +2,7 @@ export async function allOrders() {
 
 
     try {
-        const response = await fetch('http://localhost:1122/orders/');
+        const response = await fetch('http://localhost:8080/orders/');
         console.log(response)
         const data = await response.json();
 
@@ -10,6 +10,7 @@ export async function allOrders() {
 
         return data
     } catch (error) {
+        console.log("this error from the order api ");
         console.log(error)
     }
 
@@ -20,23 +21,23 @@ export async function updateCart(update) {
     console.log(typeof update.id)
     console.log(update)
     try {
-      const response = await fetch(`http://localhost:1122/cart/` + update.id, {
-        method: "PATCH",
-        body: JSON.stringify(update),
-        headers: { "content-type": 'application/json' }
-      });
-      console.log(response)
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-  
-      const data = await response.json();
-      return { data };
+        const response = await fetch(`http://localhost:8080/cart/` + update.id, {
+            method: "PATCH",
+            body: JSON.stringify(update),
+            headers: { "content-type": 'application/json' }
+        });
+        console.log(response)
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        return { data };
     } catch (error) {
-      console.error('Error:', error);
-      throw error; // Return a rejected Promise with the error
+        console.error('Error:', error);
+        throw error; // Return a rejected Promise with the error
     }
-  }
+}
 
 
 
@@ -44,8 +45,8 @@ export async function updateOrder(order) {
 
 
     try {
-        const response = await fetch('http://localhost:1122/orders/'+order.id,{
-            method : 'PATCH',
+        const response = await fetch('http://localhost:8080/orders/' + order.id, {
+            method: 'PATCH',
             body: JSON.stringify(order),
             headers: { "content-type": 'application/json' }
 
@@ -68,8 +69,8 @@ export async function deleteOrder(order) {
 
 
     try {
-        const response = await fetch('http://localhost:1122/orders/'+order,{
-            method : 'DELETE',
+        const response = await fetch('http://localhost:8080/orders/' + order, {
+            method: 'DELETE',
             headers: { "content-type": 'application/json' }
 
 
@@ -79,7 +80,7 @@ export async function deleteOrder(order) {
 
         console.log(data)
 
-        return { data:order}
+        return { data: order }
     } catch (error) {
         console.log(error)
     }
